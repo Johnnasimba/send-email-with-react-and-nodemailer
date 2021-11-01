@@ -1,4 +1,3 @@
-import e from 'cors';
 import React, { Component } from 'react';
 import axios from 'axios';
 
@@ -127,7 +126,7 @@ resetForm=()=> {
 
                         </textarea>
                     </div>
-                    <div class="msg">Your message has been sent</div>
+                    <div className={this.state.sent ? 'msg msgAppear':'msg'}>Your message has been sent</div>
                     {/* end of single item */}
                     <div className="btn">
                         <button type="submit">Submit</button>
