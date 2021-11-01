@@ -1,5 +1,6 @@
 import e from 'cors';
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class Form extends Component{
     state = {
@@ -31,22 +32,50 @@ class Form extends Component{
             message: e.target.value
         })
     }
-    handleSent =()=> {
-        this.setState({
-            sent: !this.state.sent
-        })
-    }
+  
     
     // end of handle input
 
+formSubmit = (e) => {
+    e.preventDefault();
+    let data = {
+        name: this.state.name,
+        lastname: this.state.lastname,
+        email: this.state.email,
+        message: this.state.message
+    }
+    axios.post('api/form', data) 
+        .then(res=>{
+            this.state({
+                sent: true,
+            }, this.resetForm())
+            
+        }).catch(()=>{
+            console.log("message not sent");
+        })
+    
+}
 
-
+// reset initial form data
+resetForm=()=> {
+    this.setState({
+        name: '',
+        lastname: '',
+        email: '',
+        message: ''
+    })
+    setTimeout(()=>{
+        this.setState({
+            sent: false,
+        }, 3000)
+    })
+}
 
     render() {
 
 
         return (
-            <div className="container">
+            <div className="container"> 
                 <form>
                     {/* single item */}
                     <div className="singleItem">
