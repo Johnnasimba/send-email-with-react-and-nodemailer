@@ -9,7 +9,7 @@
 
  app.use(bodyParser.json());
  app.use(bodyParser.urlencoded({extended: true}));
- app.use(cors());
+ app.use(cors({ credentials: true }))
 
 
  app.get('/', ()=>{
@@ -21,13 +21,13 @@ app.post('/api/form', (req, res)=> {
         service: 'Gmail',
         port: 465,
         auth:{
-            user: process.env.email,
-            password: process.env.password
+            user: process.env.EMAIL,
+            password: process.env.PASSWORD
         }
     })
     let mailOptions = {
         from:data.email, 
-        to:process.env.email,
+        to:process.env.EMAIL,
         subject: `Message from ${data.name}`,
         html: `
         <h3>Information</h3>
@@ -52,4 +52,10 @@ app.post('/api/form', (req, res)=> {
 
     smtpTransport.close();
 
+})
+
+const PORT = process.env.PORT||3001
+
+app.listen(PORT, ()=> {
+    console.log(`Server running on port ${PORT}`)
 })

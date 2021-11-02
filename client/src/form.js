@@ -13,22 +13,22 @@ class Form extends Component{
     // handle input
     handleName =(e)=> {
         this.setState({
-            name: e.target.value
+            name:e.target.value
         })
     }
     handleLastname =(e)=> {
         this.setState({
-            lastname: e.target.value
+            lastname:e.target.value
         })
     }
     handleEmail =(e)=> {
         this.setState({
-            mail: e.target.value
+            email: e.target.value
         })
     }
     handleMessage =(e)=> {
         this.setState({
-            message: e.target.value
+            message:e.target.value
         })
     }
   
@@ -43,16 +43,17 @@ formSubmit = (e) => {
         email: this.state.email,
         message: this.state.message
     }
-    axios.post('api/form', data) 
+    axios.post('http://localhost:3001/api/form', data) 
         .then(res=>{
-            this.state({
+            this.setState({
                 sent: true,
-            }, this.resetForm())
+            }
+            // , this.resetForm()
+            )
             
-        }).catch(()=>{
-            console.log("message not sent");
+        }).catch((error)=>{
+            console.log("message not sent" + error);
         })
-    
 }
 
 // reset initial form data
@@ -66,8 +67,8 @@ resetForm=()=> {
     setTimeout(()=>{
         this.setState({
             sent: false,
-        }, 3000)
-    })
+        })
+    }, 3000)
 }
 
     render() {
@@ -75,7 +76,7 @@ resetForm=()=> {
 
         return (
             <div className="container"> 
-                <form>
+                <form onSubmit={this.formSubmit}>
                     {/* single item */}
                     <div className="singleItem">
                         <label  htmlFor="name">Name</label>
@@ -103,7 +104,7 @@ resetForm=()=> {
                     {/* single item */}
                     <div className="singleItem">
                         <label  htmlFor="email">email</label>
-                        <input type="text"
+                        <input type="email"
                         name="email" 
                         className="mail" 
                         placeholder="email" 
